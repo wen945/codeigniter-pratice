@@ -8,17 +8,43 @@ class Member_model extends CI_Model
                 $this->load->database();
         }
 
-        public function get_members($system_id = true)
+        public function get_members($number = FALSE)
         {
-                if ($system_id = true)//default select * from memberinfo
+                if ($number == FALSE)//default select * from memberinfo
                 {
                         $query = $this->db->get('memberinfo');
                         return $query->result_array();                        
                 }
+                else
+                {
+                        $query = $this->db->get_where('memberinfo', array('number' => $number));
+                        return $query->row_array();
+                }
 
-                $query = $this->db->get_where('memberinfo', array('$system_id' => $system_id));
-                return $query->row_array();
+                
         }
-        
+        public function set_members()
+		{
+                        $this->load->helper('url');
+
+                        $number = rand();
+
+                        $data = array(
+                                'member_name' => $this->input->post('member_name'),
+                                'member_acct' => $this->input->post('member_acct'),
+                                'member_pawd' => $this->input->post('member_pawd'),
+                                'number'=> $number,
+                                'system_state' => '1',
+		    );
+
+		    return $this->db->insert('memberinfo', $data);
+		}
+        public function remove_members()
+        {
+                $name = $this->input->post('member_name');
+                $this->db->where('member_name', $name)->delete('memberinfo');
+        }
+
+
 }
 ?>

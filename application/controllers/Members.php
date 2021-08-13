@@ -18,43 +18,68 @@ class Members extends CI_Controller {
         }
 
         
-        // public function view($system_id =-1)
-        // {
-        //         $data['member'] = $this->Member_model->get_members($system_id);
+        public function view($number)
+        {
+                $data['member'] = $this->Member_model->get_members($number);
 
-        //         // if (empty($data['member']))
-        //         // {
-        //         //         show_404();
-        //         // }
+                if (empty($data['member']))
+                {
+                        show_404();
+                }
 
-        //         // $data['title'] = $data['member']['member_name'];
+                $data['title'] = $data['member']['member_name'];
 
-        //         $this->load->view('templates/header', $data);
-        //         $this->load->view('memberinfo/index', $data);
-        //         $this->load->view('templates/footer');
+                $this->load->view('templates/header', $data);
+                $this->load->view('members/view', $data);
+                $this->load->view('templates/footer');
                 
-        // }
+        }
+        
 
         public function create()
         {
                 $this->load->helper('form');
                 $this->load->library('form_validation');
 
-                $data['title'] = 'Create a new member';
+                $data['title'] = '新增會員資料';
 
                 $this->form_validation->set_rules('member_name', 'Name', 'required');
-                $this->form_validation->set_rules('text', 'text', 'required');
+                $this->form_validation->set_rules('member_acct', 'acct', 'required');
+                $this->form_validation->set_rules('member_pawd', 'pawd', 'required');
+                
 
                 if ($this->form_validation->run() === FALSE)
                 {
                         $this->load->view('templates/header', $data);
-                        $this->load->view('class/create');
+                        $this->load->view('members/create');
                         $this->load->view('templates/footer');
                 }
                 else
                 {
-                        $this->student_model->set_students();
-                        $this->load->view('class/success');
+                        $this->Member_model->set_members();
+                        $this->load->view('members/success');
+                }
+        }
+        public function remove()
+        {
+                $this->load->helper('form');
+                $this->load->library('form_validation');
+
+                $data['title'] = '刪除會員資料';
+
+                $this->form_validation->set_rules('member_name', 'Name', 'required');
+
+                if ($this->form_validation->run() === FALSE)
+                {
+                        $this->load->view('templates/header', $data);
+                        $this->load->view('members/remove',$data);
+                        $this->load->view('templates/footer');
+                }
+                else
+                {
+                        $data['title'] = 'remove success!';
+                        $this->Member_model->remove_members();
+                        $this->load->view('members/success',$data);
                 }
         }
 }
