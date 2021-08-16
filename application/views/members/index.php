@@ -2,8 +2,8 @@
 
 <?php foreach ($all_member as $member): ?>
 
-        <h3><?php echo $member['member_name'] ?></h3>
-        <p><a href="view/<?php echo $member['number'] ?>">View details</a></p>
+        <h3><?php echo $member['member_acct'] ?></h3>
+        <p><a href="view/<?php echo $member['member_acct'] ?>">View details</a></p>
 
 <?php endforeach ?>
 

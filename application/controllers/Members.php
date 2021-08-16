@@ -18,9 +18,9 @@ class Members extends CI_Controller {
         }
 
         
-        public function view($number)
+        public function view($member_acct)
         {
-                $data['member'] = $this->Member_model->get_members($number);
+                $data['member'] = $this->Member_model->get_members($member_acct);
 
                 if (empty($data['member']))
                 {
@@ -32,34 +32,57 @@ class Members extends CI_Controller {
                 $this->load->view('templates/header', $data);
                 $this->load->view('members/view', $data);
                 $this->load->view('templates/footer');
+
+
                 
         }
         
 
-        public function create()
+        public function register_members()
         {
                 $this->load->helper('form');
                 $this->load->library('form_validation');
 
                 $data['title'] = '新增會員資料';
 
-                $this->form_validation->set_rules('member_name', 'Name', 'required');
-                $this->form_validation->set_rules('member_acct', 'acct', 'required');
-                $this->form_validation->set_rules('member_pawd', 'pawd', 'required');
-                
+                $this->form_validation->set_rules('account', '帳號', 'required');
+                $this->form_validation->set_rules('password', '密碼', 'required');
+                $this->form_validation->set_rules('checkPassword', '請再次輸入密碼', 'required');
+                $this->form_validation->set_rules('name', '姓名', 'required');
+                $this->form_validation->set_rules('phone', '電話', 'required');
+                $this->form_validation->set_rules('email', '信箱', 'required');
 
                 if ($this->form_validation->run() === FALSE)
                 {
                         $this->load->view('templates/header', $data);
-                        $this->load->view('members/create');
+                        $this->load->view('members/register_members');
                         $this->load->view('templates/footer');
                 }
                 else
                 {
-                        $this->Member_model->set_members();
+                        $this->Member_model->register_members();
                         $this->load->view('members/success');
                 }
         }
+
+        public function login_members()
+        {	
+    	
+    	$check_data = $this->Member_model->login_members($this->input->post('account'));
+    	if($check_data == ""){
+    		echo "尚未註冊";
+    	}
+    	else{
+    		if($check_data->password == $this->input->post('password')){
+    			echo "登入成功!";
+    		}
+    		else{
+    			echo "登入失敗!";
+    		}
+    	}
+    }
+
+       
         public function remove()
         {
                 $this->load->helper('form');
@@ -81,6 +104,13 @@ class Members extends CI_Controller {
                         $this->Member_model->remove_members();
                         $this->load->view('members/success',$data);
                 }
+        }
+        public function home(){
+
+
+                $this->load->view('templates/header');
+                $this->load->view('members/home');
+                $this->load->view('templates/footer');
         }
 }
 ?>

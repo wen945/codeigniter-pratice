@@ -7,4 +7,4 @@
     <title>Codelgniter</title>
 </head>
 <body>
-    <h1>Cordeigniter pratice</h1>
+    <h1>會員系統</h1>
