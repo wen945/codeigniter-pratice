@@ -15,20 +15,21 @@ class Email extends CI_Controller{
         $mail = $this->phpmailer_lib->load();
         
         // SMTP configuration
-        $mail->isSMTP();
-        $mail->Host     = 'smtp.example.com';
+        $mail->IsSMTP();
+        $mail->Host     = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'wen94945@gmail.com';
-        $mail->Password = 'wunny5382';
-        $mail->SMTPSecure = 'tls';
-        $mail->Port     = 587;
+        $mail->Password = 'TesT1234';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port     = 465;
+        $mail->CharSet = "utf-8";
         
-        $mail->setFrom('wen94945@gmail.com', 'CodexWorld');
-        $mail->addReplyTo('wenjp65@gmail.com', 'CodexWorld');
+        $mail->From ='wen94945@gmail.com'; //寄件者信箱
+        $mail->FromName = 'wen94945@gmail.com'; //寄件者姓名);
         
         // Add a recipient
-        $mail->addAddress('wenjp65@gmail.com');
-        
+        $mail->IsHTML(true); //郵件內容為html
+        $mail->AddAddress("wenjp65@gmail.com"); //收件者郵件及名稱
         // // Add cc or bcc 
         // $mail->addCC('cc@example.com');
         // $mail->addBCC('bcc@example.com');

@@ -66,20 +66,26 @@ class Members extends CI_Controller {
         }
 
         public function login_members()
-        {	
-    	
-    	$check_data = $this->Member_model->login_members($this->input->post('account'));
+        {
+                
+    	//我嘗試的寫法
+    	// $check_acct = $this->Member_model->login_members('member_acct');
+        // $check_pswd = $this->Member_model->login_members('member_pawd');
+        $check_data = $this->Member_model->login_members($this->input->post('account'));
     	if($check_data == ""){
     		echo "尚未註冊";
     	}
     	else{
-    		if($check_data->password == $this->input->post('password')){
-    			echo "登入成功!";
-    		}
-    		else{
-    			echo "登入失敗!";
-    		}
-    	}
+                if($check_data->member_pawd == $this->input->post('password')){
+
+                        $this->load->view('templates/header');
+                        $this->load->view('members/login_members',$check_data );
+                        $this->load->view('templates/footer');
+                }
+                else{
+                        echo "登入失敗!";
+                }
+        }
     }
 
        

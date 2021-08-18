@@ -42,6 +42,13 @@ class Member_model extends CI_Model
         }
         public function login_members($account)
         {
+                //我嘗試的寫法
+                // $query= $this->db->query('SELECT member_acct ,member_pawd FROM memberinfo');
+                // if ($query->num_rows() > 0)
+                // {
+                //         $row = $query->row();
+                //         echo $row->member_acct;
+                // }      
                 $member_info =   $this->db->where('member_acct',$account)
                                         ->get('memberinfo')
                                         ->row();
