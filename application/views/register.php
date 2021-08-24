@@ -53,7 +53,6 @@
 						<th>UserID</th>
 						<th>Email</th>
 						<th>Password</th>
-						<th>Code</th>
 						<th>Active</th>
 					</tr>
 				</thead>
@@ -65,7 +64,6 @@
 							<td><?php echo $row->id; ?></td>
 							<td><?php echo $row->email; ?></td>
 							<td><?php echo $row->password; ?></td>
-							<td><?php echo $row->code; ?></td>
 							<td><?php echo $row->active ? 'True' : 'False'; ?></td>
 						</tr>
 						<?php
